@@ -1,0 +1,20 @@
+{
+  "name": "atsumebot",
+  "version": "1.0.0",
+  "description": "A twitter bot that tweets images of Neko Atsume cats.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Neko",
+    "Atsume",
+    "Cats"
+  ],
+  "author": "Yasmin Dias",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "twit": "^2.2.9"
+  }
+}
