@@ -6,19 +6,27 @@ var fs = require('fs');
 var path = require('path');
 var Twit = require('twit');
 var config = require(path.join(__dirname, 'config.js'));
-
 var T = new Twit(config);
 
-function randomImage(images){
-    return images[Math.floor(Math.random() * images.length)];
-}
+
+fs.readdir('images', function(err) {
+    if (err){
+        console.log(err);
+    } else {
+        var images = require(path.join(__dirname, 'images.js'));
+
+        setInterval(function(){
+            uploadImage(images);
+        }, 5000);
+    }
+});
 
 function uploadImage(images){
     var image = randomImage(images);
-    var image_path = path.join('../images/'+image.file),
-        b64content = fs.readFileSync(image_path, { encoding: 'base64' });
+    var image_path = path.join('images/'+image.file);
+    var b64content = fs.readFileSync(image_path, { encoding: 'base64' });
 
-    T.post('media/upload', { media_data: b64content }, function (err, data, response) {
+    T.post('media/upload', { media_data: b64content }, function (err, data) {
         if (err){
             console.log('ERROR: ',err);
         } else {
@@ -26,7 +34,7 @@ function uploadImage(images){
                     media_ids: new Array(data.media_id_string),
                     status: image.file.replace('.png', '')+" says 'miau'. "
                 },
-                function(err, data, response) {
+                function(err) {
                     if (err){
                         console.log('ERROR: ',err);
                     } else {
@@ -38,14 +46,6 @@ function uploadImage(images){
     });
 }
 
-fs.readdir('../images', function(err, files) {
-    if (err){
-        console.log(err);
-    } else {
-        var images = require(path.join(__dirname, 'images.js'));
-
-        setInterval(function(){
-            uploadImage(images);
-        }, 5000);
-    }
-});
+function randomImage(images){
+    return images[Math.floor(Math.random() * images.length)];
+}
