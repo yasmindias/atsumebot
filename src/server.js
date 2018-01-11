@@ -17,7 +17,7 @@ fs.readdir('images', function(err) {
 
         setInterval(function(){
             uploadImage(images);
-        }, 360000);
+        }, 3600000);
     }
 });
 
